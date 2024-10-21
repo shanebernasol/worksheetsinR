@@ -1,0 +1,160 @@
+---
+title: "RWorksheet_Bernasol#3A"
+author: "Shane Jhammielyn A. Bernasol"
+output: pdf_document
+---
+
+# a. First 11 letters
+```{r}
+first11 <- LETTERS[1:11]
+print(first11)
+```
+
+
+# b. Odd-numbered letters
+```{r}
+oddLetters <- LETTERS[seq(1, 26, by = 2)]
+print(oddLetters)
+```
+
+
+# c. vowels
+```{r}
+vowels <- LETTERS[c(1, 5, 9, 15, 21)]
+print(vowels)
+```
+
+
+# d. Last 5 lowercase letters
+```{r}
+last5 <- letters[22:26]
+print(last5)
+```
+
+
+# e. Lowercase letters between 15 to 24
+```{r}
+midLetters <- letters[15:24]
+print(midLetters)
+```
+
+
+# a. Create character vector for city names
+```{r}
+city <- c("Tuguegarao City", "Manila", "Iloilo City", "Tacloban", "Samal Island", "Davao City")
+print(city)
+```
+
+
+# b. Create temperature vector
+```{r}
+temp <- c(42, 39, 34, 34, 30, 27)
+print(temp)
+```
+
+# c. Create a dataframe combining city and temp
+```{r}
+city_temp <- data.frame(City = city, Temperature = temp)
+print(city_temp)
+```
+
+
+# d. Renaming the columns of the dataframe
+```{r}
+names(city_temp) <- c("City", "Temperature")
+print(city_temp)
+```
+
+
+# e. Printing the structure of the dataframe
+```{r}
+str(city_temp)
+```
+
+
+# f. Content of row 3 and row 4
+```{r}
+print(city_temp[3:4, ])
+```
+
+
+# g. City with the highest and lowest temperature
+```{r}
+hottest <- city_temp[which.max(city_temp$Temperature), ]
+coldest <- city_temp[which.min(city_temp$Temperature), ]
+print(hottest)
+print(coldest)
+```
+
+
+# a. Create a matrix with 4 columns and 3 rows
+```{r}
+mat <- matrix(c(1:8, 11:14), nrow = 3, ncol = 4)
+print(mat)
+```
+
+
+# b. Multiply the matrix by 2
+```{r}
+mat2 <- mat * 2
+print(mat2)
+```
+
+
+# c. Content of row 2
+```{r}
+print(mat2[2, ])
+```
+
+
+# d. Column 3 and 4 from row 1 and 2
+```{r}
+print(mat2[1:2, 3:4])
+```
+
+
+# e. Columns 2 and 3 from row 3
+```{r}
+print(mat2[3, 2:3])
+```
+
+
+# f. Only column 4
+```{r}
+print(mat2[, 4])
+```
+
+# g. Renaming rows and columns
+```{r}
+rownames(mat2) <- c("isa", "dalawa", "tatlo")
+colnames(mat2) <- c("uno", "dos", "tres", "quatro")
+print(mat2)
+```
+
+
+# h. Reshape the matrix into 2 columns and 6 rows
+```{r}
+dim(mat) <- c(6, 2)
+print(mat)
+```
+
+
+# a. Create a 3D array with specified values, 4 columns, 2 rows, and 3 dimensions
+```{r}
+arr <- array(rep(c(1, 2, 3, 6, 7, 8, 9, 0, 3, 4, 5, 1), each = 2), dim = c(2, 4, 3))
+print(arr)
+```
+
+# b. Checking the dimensions of the array
+```{r}
+print(dim(arr))
+```
+
+
+# c. Naming the dimensions of the array
+```{r}
+dimnames(arr) <- list(letters[1:2], LETTERS[1:4], c("1st-Dimensional Array", "2nd-Dimensional Array", "3rd-Dimensional Array"))
+print(arr)
+```
+
+
