@@ -186,6 +186,7 @@ for (i in 1:nrow(grades_data)) {
 cat(results, "\n")
 
 ```
+#D Highest scores
 ```{r}
 students_scores <- data.frame(
   student = c("Annie", "Bob", "Cathy", "David"),
