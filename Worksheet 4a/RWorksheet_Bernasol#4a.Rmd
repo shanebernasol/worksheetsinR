@@ -186,4 +186,22 @@ for (i in 1:nrow(grades_data)) {
 cat(results, "\n")
 
 ```
+```{r}
+students_scores <- data.frame(
+  student = c("Annie", "Bob", "Cathy", "David"),
+  semester_scores = I(list(c(88, 95, 80), c(72, 85, 91), c(90, 88, 92), c(89, 70, 78)))
+)
+
+for (i in 1:nrow(students_scores)) {
+  scores <- students_scores$semester_scores[[i]]
+  
+  sorted_scores <- sort(scores, decreasing = TRUE)
+  highest_score <- sorted_scores[1]  # First element is the highest score
+  
+  if (highest_score > 90) {
+    cat(students_scores$student[i], "’s highest grade this semester is ", highest_score, ".\n", sep = "")
+  }
+}
+
+```
 
