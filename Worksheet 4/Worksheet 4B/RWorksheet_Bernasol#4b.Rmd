@@ -1,0 +1,220 @@
+---
+title: "RWorksheet_Bernasol#4b"
+author: "Shane Jhammielyn A. Bernasol"
+output: pdf_document
+---
+
+```{r}
+#1.Using the for loop Function
+
+vectorA <- c(1,2,3,4,5)
+matrixA <- matrix(0, nrow=5, ncol=5)
+
+for(i in 1:5){
+  for(j in 1:5){
+    matrixA[i, j] <-ifelse(j>=i, vectorA[abs(j-i)+1],0)
+  }
+}
+
+matrixA
+```
+
+```{r}
+#2. using for() function.
+
+for (i in 1:5) {
+  for (j in 1:i) {
+    cat("*")
+  }
+  cat("\n") 
+}
+```
+
+```{r}
+#3. Get an input from the user
+
+A <- as.integer(readline(prompt = "Enter starting position: "))
+
+fib1 <- 0
+fib2 <- 1
+count <- 1
+fib_sequence <- c()
+
+repeat {
+  z <- fib1 + fib2
+  
+  if (!is.na(A) && count >= A && z <= 500) {
+    fib_sequence <- c(fib_sequence, z)
+  }
+  
+  fib1 <- fib2
+  fib2 <- z
+  count <- count + 1
+  
+  if (z > 500) break
+}
+
+print(fib_sequence)
+```
+
+
+
+```{r}
+#4 A. Display first 6 rows
+library(readr)
+
+shoe_Sizes <- read_csv("/cloud/project/Worksheet 4/Worksheet 4B/Shoe-Sizes.csv")
+
+head(shoe_Sizes)
+```
+
+```{r}
+#4 B. Creating subset for gender (female and male)
+
+male <- subset(shoe_Sizes, Gender == "M")
+female <- subset(shoe_Sizes, Gender == "F")
+num_males <- nrow(male)
+num_females <- nrow(female)
+
+cat("Number of Male observations:", num_males, "\n")
+cat("Number of Female observations:", num_females, "\n")
+```
+
+```{r}
+#4 C.Create a graph for the number of males and females for Household Data
+
+gender_counts <- c(num_males, num_females)
+names(gender_counts) <- c("Male", "Female")
+barplot(gender_counts,
+        main = "Number of Males and Females in Household Data",xlab = "Gender",ylab = "Count",col = c("black", "pink"),legend = c("Male", "Female"),beside = TRUE)
+
+```
+5a. Monthly income of Dela Cruz family
+```{r}
+#5 A. Monthly income of Dela Cruz family
+
+expenses <- c(Food = 60, Electricity = 10, Savings = 5, Miscellaneous = 25)
+colors <- c("yellow", "cyan", "red", "magenta")
+pie(expenses,labels = paste(names(expenses), " - ", round((expenses / sum(expenses)) * 100, 1), "%"),col = colors,main = "Dela Cruz Family Monthly Income Distribution")
+
+```
+```{r}
+#6 A.
+data(iris)
+str(iris)
+
+```
+
+```{r}
+#6 B.
+
+means <-colMeans(iris[, 1:4])
+means
+```
+
+```{r}
+#6 C.
+
+species_count <- table(iris$Species)
+species_labels <-paste(names(species_count), species_count, sep = ":")
+
+color <-c("red", "yellow", "blue")
+
+pie(species_count, labels= species_labels, col= color, main="Species Distribution in Iris DataSet")
+```
+
+```{r}
+#6 D.
+
+setosa <- subset(iris, Species == "setosa")
+versicolor <- subset(iris, Species == "versicolor")
+virginica <- subset(iris, Species=="virginica")
+
+tail(setosa)
+tail(versicolor)
+tail(virginica)
+```
+
+```{r}
+#6 E.
+
+iris$Species <-as.factor(iris$Species)
+
+Species_color <- c("setosa"="purple","versicolor"="violet", "virginica"= "red")
+species_pch <- c("setosa"= 16, "versicolor"= 17, "virginica"= 18)
+
+plot(iris$Sepal.Length, iris$Sepal.Width, col= Species_color[iris$Species],
+     xlab = "Sepal Length",
+     ylab= "Sepal Width", main ="Iris Dataset", sub= "Sepal width and length")
+
+legend ("topright", legend=levels(iris$Species), col= Species_color, pch = species_pch, title = "Species")
+```
+
+```{r}
+#6 F.Interpret the result.
+
+# Interpretation of the Scatterplot Result
+# The scatterplot shows the relationship between Sepal.Length and Sepal.Width for the three species.
+# Setosa points (in orange) tend to have shorter sepal lengths and widths.
+# Versicolor points (in pink) are more spread out and overlap slightly with virginica.
+# Virginica points (in yellow) have larger sepal lengths and widths, distinguishing them from setosa and overlapping with some versicolor points
+```
+
+
+
+```{r}
+#7.Import the alexa-file.xlsx
+
+library(readxl)
+data <- read_excel("/cloud/project/Worksheet 4/Worksheet 4B/alexa-file.xlsx")
+
+data$variation <- gsub("Black  Dot", "Black Dot", data$variation)
+data$variation <- gsub("White  Plus", "White Plus", data$variation)
+
+head(data$variation)
+```
+
+```{r}
+library(dplyr)
+
+variation_count <- data %>%
+  count(variation)
+save(variation_count, file = "variations.RData")
+print(variation_count)
+
+```
+
+```{r}
+#7 B.
+
+library(dplyr)
+load("variations.RData")
+
+barplot(variation_count$n, names.arg = variation_count$variation, col = "pink",
+        main = "Variation Count", xlab = "Variation", ylab = "Count", las = 2)
+
+```
+
+```{r}
+library(dplyr)
+
+variation_count <- data %>%
+  count(variation)
+
+save(variation_count, file = "variations.RData")
+print(variation_count)
+
+black_variations <- variation_count[grep("Black", variation_count$variation), ]
+white_variations <- variation_count[grep("White", variation_count$variation), ]
+
+barplot(cbind(black_variations$n, white_variations$n), 
+        beside = TRUE,
+        names.arg = c(black_variations$variation, white_variations$variation),
+        main = "Black vs. White Alexa Variations",
+        ylab = "Number of Variations",
+        col = c("black", "white"),
+        legend.text = c("Black", "White"),
+        args.legend = list(x = "topright"))
+
+```
+
